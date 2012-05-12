@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>zk.io blog index</title>
+    <meta charset="utf-8" />
+
+    <style type="text/css">
+    <![CDATA[
+      html{
+        background-color:rgba(92,92,92,1.0);
+        font-family:sans-serif;
+      }
+
+      a{
+        color:inherit;
+      }
+      a:hover{
+        text-decoration:none;
+      }
+
+      header{
+        font-size:20px;
+        color: rgba(0,0,0,1.0);
+        text-shadow: 1px 1px 1px rgba(127,127,127,1.0);
+        margin: 0px 0px 8px 0px; /*little bit of space under headings*/
+      }
+      section{       
+        color: rgba(16,16,16,1.0);
+        
+        font-size:16px;
+      }
+
+      section#main{        
+        width: 640px;
+        padding: 14px;
+
+        border: solid black 1px;
+        background-color:rgba(0,0,0,0.2);
+        box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
+      }
+
+      ul{
+        padding:0px;
+      }
+
+      li{
+        list-style-type:none;
+        margin: 32px 0px;
+      }
+
+      article{
+        padding: 8px;
+        border: solid black 1px;
+        background-color:rgba(0,0,0,0.1);
+        box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
+      }
+
+
+      #canvas{
+        width:100%;
+        height:400px;
+        background-color:#000;
+      }
+
+      pre textarea{
+        width:100%;
+        height:500px;
+        color:rgba(0,0,0,1.0);
+        background-color:rgba(255,255,255,0.1);
+        border:solid black 1px;
+      }
+
+    ]]>
+    </style>
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+    //]]>
+    </script>
+  </head>
+  <body>
+    <section id="main">
+      <header>A plain old boring static list of stuff I felt like sharing</header>
+      <ul>
+        <li><article>
+          <header>XML Serialised HTML5 template</header>
+          <section class="description">
+            This is the 'template' file that I'm using for this site.
+            <a href="files/xhtml5_template.xhtml">Download it here</a>
+            <pre><textarea><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>XHTML5 Template</title>
+    <meta charset="utf-8" />
+
+    <style type="text/css">
+    <![CDATA[
+
+    ]]]]><![CDATA[>
+    </style>
+
+    <!--<script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>-->
+    <script type="text/javascript">
+    //<![CDATA[
+
+    //]]]]><![CDATA[>
+    </script>
+  </head>
+  <body>
+    <!-- SVG Example: -->
+    <!--
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <rect stroke="black" fill="blue" x="45px" y="45px" width="200px" height="100px" stroke-width="2" />
+    </svg>
+    -->
+  </body>
+</html>]]></textarea></pre>
+          </section>
+        </article></li>
+        <li><article>
+          <header>3d swarming sperm things</header>
+          <section class="description">
+            I made this a while back to learn 3d projection. Click on it for a link to an editable jsfiddle.
+            <canvas id="canvas"></canvas>
+          </section>
+        </article></li>        
+      </ul>
+    </section>
+  <script type="text/javascript" src="files/swarm.js" async="async"></script>
+  </body>
+</html>
