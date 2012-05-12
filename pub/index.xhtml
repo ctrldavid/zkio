@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>zk.io</title>
+    <meta charset="utf-8" />
+
+    <style type="text/css">
+    <![CDATA[
+      html{
+        background-color: rgba(192,192,192,1.0);
+      }
+      body{
+        margin:0px;
+      }
+      #backgroundLayer{
+        z-index:1;
+        position:fixed;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;        
+      }
+      #foregroundLayer{
+        z-index:2;
+        position:relative;
+        padding:16px;
+      }
+
+      canvas{
+        z-index:1;
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        
+      }
+      h1{
+        
+        margin: 0px;
+        color:rgba(0,0,0,0);
+        text-shadow:1px 1px 3px rgba(16,16,16,1.0), 0px 0px 1px rgba(128,128,128,1.0);;
+
+      }
+
+    ]]>
+    </style>
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+    //]]>
+    </script>
+  </head>
+  <body>
+    <div id='backgroundLayer'>
+      <canvas id="canvas" width="500" height="500"></canvas>
+    </div>
+    <div id='foregroundLayer'>
+
+    </div>
+
+    <!-- SVG Example: -->
+    <!--
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <rect stroke="black" fill="blue" x="45px" y="45px" width="200px" height="100px" stroke-width="2" />
+    </svg>
+    -->
+
+    <script type="text/javascript" src="dirty.js" async="async"></script>
+  </body>
+</html>
