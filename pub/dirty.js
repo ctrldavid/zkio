@@ -33,7 +33,7 @@ dirtydiv.style.top = '0px';
 dirtydiv.style.bottom = '0px';
 dirtydiv.style.left = '0px';
 dirtydiv.style.right = '0px';
-dirtydiv.style.backgroundColor = "rgba(48,48,48,1.0)";
+dirtydiv.style.backgroundColor = "rgba(64,48,32,1.0)";
 dirtydiv.style.backgroundAttachment= "fixed";
 
 dirtydiv.style.backgroundImage = "url("+base64+")";
