@@ -55,7 +55,7 @@ class Parabola
     @_right = null
 
   Right: () -> @_right
-  SetLeft: (val) -> @_right = val
+  SetRight: (val) -> @_right = val
   Left: () -> @_left
   SetLeft: (val) -> @_left = val
 
@@ -70,6 +70,8 @@ class Parabola
   GetLeftParent: () ->
     par = @parent
     pLast = this
+    console.log this, par
+    return unless par?
 
     while par.Left() == pLast
       return null unless par.parent
@@ -80,6 +82,8 @@ class Parabola
   GetRightParent: () ->
     par = @parent
     pLast = this
+    console.log this, par
+    return unless par?
 
     while par.Right() == pLast
       return null unless par.parent 
@@ -94,7 +98,7 @@ class Parabola
       par = par.Right()  # check for infinite loop
     return par
 
-  GetLeftChild: () ->
+  GetRightChild: () ->
     return null unless this
     par = @Right()
     while !par.isLeaf
@@ -145,71 +149,93 @@ class Voronoi
     @width = 999
     @height = 999
 
+    @places = []
+    @edges = []
+    @root = null
+    @ly = 0
 
-  getEdges: (places, width, height) -> # Rename to recalculate or something?
-    root = null
+    # deleted = {}
+    @points = []
+    @queue = []
+
+
+    # Vertices *    places;
+    # Edges *     edges;
+    # double      width, height;
+    # VParabola *   root;
+    # double      ly;
+
+    # std::set<VEvent *>  deleted;
+    # std::list<VPoint *> points;
+    # std::priority_queue<VEvent *, std::vector<VEvent *>, VEvent::CompareEvent> queue;
     
-    points = [] #?
-    edges = [] #?
-    queue = [] #?
+
+
+  GetEdges: (@places, @width, @height) -> # Rename to recalculate or something?
+    @root = null
+    
+    @points = [] #?
+    @edges = [] #?
+    @queue = [] #?
 
     # 'true' denotes a place event. This is adding all the places to the event queue.
-    queue.push new Event place, true for place in places
+    @queue.push new Event place, true for place in @places
 
     # work through the queue
-    while queue.length > 0
-      e = queue.pop()
-      ly = e.point.y
+    while @queue.length > 0
+      e = @queue.shift() # this may need to be queue.shift() to keep teh logics the same.
+      @ly = e.point.y
       # stupid deleted list check thing
       
-      if e.pe then InsertParabola e.point else RemoveParabola e
+      if e.pe then @InsertParabola e.point else @RemoveParabola e
 
-    FinishEdge root
+    @FinishEdge @root
 
-    (edge.start = edge.neighbour.end if edge.neighbor?) for edge in edges
+    (edge.start = edge.neighbour.end if edge.neighbor?) for edge in @edges
 
-    return edges
+    return @edges
 
   InsertParabola: (p) ->
-    unless root
-      root = new Parabola p
+    unless @root
+      @root = new Parabola p
       return
 
-    if root.isLeaf && root.site.y - p.y < 1 # translate: degenerate EVENT - both of the lower places at the same height
-      fp = root.site
-      root.isLeaf = false
-      root.SetLeft new Parabola fp
-      root.SetRight new Parabola p
+    if @root.isLeaf && @root.site.y - p.y < 1 # translate: degenerate EVENT - both of the lower places at the same height
+      fp = @root.site
+      @root.isLeaf = false
+      @root.SetLeft new Parabola fp
+      @root.SetRight new Parabola p
 
-      s = new Point (p.x + fp.x)/2, height # translate: The beginning of the middle edge points
-      points.push s
+      s = new Point (p.x + fp.x)/2, @height # translate: The beginning of the middle edge points
+      @points.push s
 
       # translate: decide who left to right
       if p.x > fp.x  
-        root.edge = new Edge s, fp, p 
+        @root.edge = new Edge s, fp, p 
       else
-        root.edge = new Edge s, p, fp
+        @root.edge = new Edge s, p, fp
 
-      edges.push root.edge
+      @edges.push @root.edge
 
       return  # instead of else + indent?
 
-    par = GetParabolaByX p.x
+    par = @GetParabolaByX p.x
 
     if par.cEvent
       # deleted.insert par.cEvent
+      queue.splice queue.indexOf(par.cEvent), 1
       par.cEvent = 0
   
-    start = new Point p.x, GetY par.site, p.x
+    start = new Point p.x, @GetY par.site, p.x
 
-    points.push start
+    @points.push start
 
     el = new Edge start, par.site, p
     er = new Edge start, p, par.site
 
     el.neighbor = er  # Why is this one sided?
 
-    edges.push el
+    @edges.push el
 
     par.edge = er
     par.isLeaf = false
@@ -225,8 +251,8 @@ class Voronoi
     par.Left().SetLeft p0
     par.Left().SetRight p1
 
-    CheckCircle p0
-    CheckCircle p2
+    @CheckCircle p0
+    @CheckCircle p2
 
   RemoveParabola: (e) -> # e is an event? o_O
     p1 = e.arch
@@ -240,14 +266,16 @@ class Voronoi
 
     if p0.cEvent?
       #deleted.insert p0.cEvent
+      queue.splice queue.indexOf(p0.cEvent), 1
       p0.cEvent = null
 
     if p2.cEvent?
       #deleted.insert p2.cEvent
+      queue.splice queue.indexOf(p2.cEvent), 1
       p2.cEvent = null
 
-    p = new Point e.point.x, GetY p1.site, e.point.x
-    points.push p
+    p = new Point e.point.x, @GetY p1.site, e.point.x
+    @points.push p
 
     xl.edge.end = p
     xr.edge.end = p
@@ -255,13 +283,13 @@ class Voronoi
     #higher = null
     par = p1  
 
-    while par != root
+    while par != @root
       par = par.parent
       higher = xl if par == xl
       higher = xr if par == xr
 
     higher.edge = new Edge p, p0.site, p2.site
-    edges.push higher.edge
+    @edges.push higher.edge
 
     gparent = p1.parent.parent #naming?
 
@@ -273,8 +301,8 @@ class Voronoi
       gparent.SetRight p1.parent.Left() if gparent.Right() == p1.parent
 
 
-    CheckCircle p0
-    CheckCircle p2
+    @CheckCircle p0
+    @CheckCircle p2
 
 
   FinishEdge: (n) ->  # n is parabola
@@ -282,7 +310,7 @@ class Voronoi
     # mx = 0.0
 
     if n.edge.direction.x > 0.0
-      mx = Math.max width, n.edge.start.x + 10  # wtf + 10? that can't be right.
+      mx = Math.max @width, n.edge.start.x + 10  # wtf + 10? that can't be right.
     else
       mx = Math.min 0.0, n.edge.start.x - 10 # is the 10 how far over the edge it goes?
 
@@ -290,10 +318,10 @@ class Voronoi
     end = new Point mx, mx * n.edge.f + n.edge.g
     n.edge.end = end
 
-    points.push end
+    @points.push end
   
-    FinishEdge n.Left()
-    FinishEdge n.Right()
+    @FinishEdge n.Left()
+    @FinishEdge n.Right()
       
 
   GetXOfEdge: (par, y) ->
@@ -312,7 +340,7 @@ class Voronoi
     dp = 2.0 * (r.y - y)      
     a2 = 1.0 / dp
     b2 = -2.0 * r.x / dp
-    c2 = ly + dp / 4 + r.x * r.x / dp
+    c2 = @ly + dp / 4 + r.x * r.x / dp
        
     a = a1 - a2
     b = b1 - b2
@@ -332,10 +360,10 @@ class Voronoi
 
 
   GetParabolaByX: (xx) ->
-    par = root
+    par = @root
     # x = 0.0
-    while !par.isLeaf
-      x = GetXOfEdge par, ly
+    while !par.isLeaf # translate: walk until you hit a tree on the appropriate sheet
+      x = @GetXOfEdge par, @ly
       if x > xx
         par = par.Left() 
       else
@@ -344,29 +372,50 @@ class Voronoi
     return par
 
 
-  GetY: (p, x) -> # translate: ohnisko, x-souøadnice
-    dp = 2 * (p->y - ly);
+  GetY: (p, x) -> # translate: focus/focal point, x-coordinates
+    dp = 2 * (p.y - @ly)
+    a1 = 1 / dp
+    b1 = -2 * p.x / dp
+    c1 = @ly + dp / 4 + p.x * p.x / dp
+
+    return a1 * x * x + b1 * x + c1
     
-double  Voronoi::GetY(VPoint * p, double x) // ohnisko, x-souøadnice
-{
-  double dp = 2 * (p->y - ly);
-  double a1 = 1 / dp;
-  double b1 = -2 * p->x / dp;
-  double c1 = ly + dp / 4 + p->x * p->x / dp;
-  
-  return(a1*x*x + b1*x + c1);
-}
+  CheckCircle: (b) ->
+    lp = b.GetLeftParent()
+    rp = b.GetRightParent()
+    a = lp.GetLeftChild()
+    c = rp.GetRightChild()
 
+    return if (!a || !c || a.site == c.site)  #switch to below
+    #return unless a && c && a.site != c.site 
 
+    s = @GetEdgeIntersection lp.edge, rp.edge
+    return unless s?
 
+    dx = a.site.x - s.x
+    dy = a.site.y - s.y
 
+    d = Math.sqrt dx * dx + dy * dy
 
+    return if s.y - d >= @ly
 
+    e = new Event new Point(s.x, s.y - d), false
+    @points.push e.point
+    b.cEvent = e
+    e.arch = b
+    @queue.push e
 
-
-
-
-
+  GetEdgeIntersection: (a, b) ->
+    x = (b.g - a.g) / (a.f - b.f)
+    y = a.f * x + a.g
+    # This shit is silly, remove the costly / and just check sign.
+    return null if (x - a.start.x) / (a.direction.x) < 0
+    return null if (y - a.start.y) / (a.direction.y) < 0
+    return null if (x - b.start.x) / (b.direction.x) < 0
+    return null if (y - b.start.y) / (b.direction.y) < 0
+    p = new Point x, y
+    @points.push p
+    return p
 
 
 
