@@ -3,13 +3,13 @@
 r = (max,min = 0) -> Math.random() * (max-min) + min
 
 sites = []
-sites.push new Point r(1000), r(1000) for i in [1...100]
+sites.push new Point r(500), r(500) for i in [1..50]
 
 
 
 canvas = document.createElement 'canvas'
-canvas.width = 1000
-canvas.height = 1000
+canvas.width = 500
+canvas.height = 500
 ctx = canvas.getContext '2d'
 
 ctx.fillRect s.x-1, s.y-1, 3, 3 for s in sites
@@ -17,5 +17,12 @@ ctx.fillRect s.x-1, s.y-1, 3, 3 for s in sites
 document.body.appendChild canvas
 
 v = new Voronoi()
-edges = v.GetEdges(sites, 1000, 1000)
-console.log edges
+edges = v.GetEdges(sites, 500, 500)
+#console.log edges
+
+for edge in edges
+	ctx.beginPath()
+	ctx.moveTo edge.start.x, edge.start.y
+	ctx.lineTo edge.end.x, edge.end.y
+	ctx.stroke()
+	#console.log "#{edge.start.x}, #{edge.start.y} - #{edge.end.x}, #{edge.end.y}"

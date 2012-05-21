@@ -33,13 +33,15 @@ Parabola = (function() {
     return this._right;
   };
   Parabola.prototype.SetRight = function(val) {
-    return this._right = val;
+    this._right = val;
+    return val.parent = this;
   };
   Parabola.prototype.Left = function() {
     return this._left;
   };
   Parabola.prototype.SetLeft = function(val) {
-    return this._left = val;
+    this._left = val;
+    return val.parent = this;
   };
   Parabola.prototype.GetLeft = function() {
     return this.GetLeftParent.GetLeftChild();
@@ -51,10 +53,6 @@ Parabola = (function() {
     var pLast, par;
     par = this.parent;
     pLast = this;
-    console.log(this, par);
-    if (par == null) {
-      return;
-    }
     while (par.Left() === pLast) {
       if (!par.parent) {
         return null;
@@ -68,10 +66,6 @@ Parabola = (function() {
     var pLast, par;
     par = this.parent;
     pLast = this;
-    console.log(this, par);
-    if (par == null) {
-      return;
-    }
     while (par.Right() === pLast) {
       if (!par.parent) {
         return null;
@@ -120,8 +114,8 @@ Event = (function() {
 Voronoi = (function() {
   function Voronoi(sites) {
     this.sites = sites;
-    this.width = 999;
-    this.height = 999;
+    this.width = 500;
+    this.height = 500;
     this.places = [];
     this.edges = [];
     this.root = null;
@@ -143,20 +137,26 @@ Voronoi = (function() {
       place = _ref[_i];
       this.queue.push(new Event(place, true));
     }
+    this.queue.sort(function(a, b) {
+      return a.y - b.y;
+    });
     while (this.queue.length > 0) {
-      e = this.queue.shift();
+      e = this.queue.pop();
       this.ly = e.point.y;
       if (e.pe) {
         this.InsertParabola(e.point);
       } else {
         this.RemoveParabola(e);
       }
+      this.queue.sort(function(a, b) {
+        return a.y - b.y;
+      });
     }
     this.FinishEdge(this.root);
     _ref2 = this.edges;
     for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
       edge = _ref2[_j];
-      if (edge.neighbor != null) {
+      if (edge.neighbour != null) {
         edge.start = edge.neighbour.end;
       }
     }
@@ -185,14 +185,14 @@ Voronoi = (function() {
     }
     par = this.GetParabolaByX(p.x);
     if (par.cEvent) {
-      queue.splice(queue.indexOf(par.cEvent), 1);
+      this.queue.splice(this.queue.indexOf(par.cEvent), 1);
       par.cEvent = 0;
     }
     start = new Point(p.x, this.GetY(par.site, p.x));
     this.points.push(start);
     el = new Edge(start, par.site, p);
     er = new Edge(start, p, par.site);
-    el.neighbor = er;
+    el.neighbour = er;
     this.edges.push(el);
     par.edge = er;
     par.isLeaf = false;
@@ -218,11 +218,11 @@ Voronoi = (function() {
       throw new Error("error - right and left parabola has the same focus!");
     }
     if (p0.cEvent != null) {
-      queue.splice(queue.indexOf(p0.cEvent), 1);
+      this.queue.splice(this.queue.indexOf(p0.cEvent), 1);
       p0.cEvent = null;
     }
     if (p2.cEvent != null) {
-      queue.splice(queue.indexOf(p2.cEvent), 1);
+      this.queue.splice(this.queue.indexOf(p2.cEvent), 1);
       p2.cEvent = null;
     }
     p = new Point(e.point.x, this.GetY(p1.site, e.point.x));
@@ -328,9 +328,13 @@ Voronoi = (function() {
     var a, c, d, dx, dy, e, lp, rp, s;
     lp = b.GetLeftParent();
     rp = b.GetRightParent();
-    a = lp.GetLeftChild();
-    c = rp.GetRightChild();
-    if (!a || !c || a.site === c.site) {
+    if (lp != null) {
+      a = lp.GetLeftChild();
+    }
+    if (rp != null) {
+      c = rp.GetRightChild();
+    }
+    if (!((a != null) && (c != null) && a.site !== c.site)) {
       return;
     }
     s = this.GetEdgeIntersection(lp.edge, rp.edge);

@@ -54,10 +54,23 @@ class Parabola
     @_left = null
     @_right = null
 
+
+
+  # void    SetLeft (VParabola * p) {_left  = p; p->parent = this;}
+  # void    SetRight(VParabola * p) {_right = p; p->parent = this;}
+
+  # VParabola * Left () { return _left;  }
+  # VParabola * Right() { return _right; }
+
   Right: () -> @_right
-  SetRight: (val) -> @_right = val
+  SetRight: (val) -> 
+    @_right = val
+    val.parent = this
+
   Left: () -> @_left
-  SetLeft: (val) -> @_left = val
+  SetLeft: (val) -> 
+    @_left = val
+    val.parent = this
 
 
 
@@ -70,25 +83,23 @@ class Parabola
   GetLeftParent: () ->
     par = @parent
     pLast = this
-    console.log this, par
-    return unless par?
 
     while par.Left() == pLast
       return null unless par.parent
       pLast = par
       par = par.parent
+
     return par
 
   GetRightParent: () ->
     par = @parent
     pLast = this
-    console.log this, par
-    return unless par?
 
     while par.Right() == pLast
       return null unless par.parent 
       pLast = par
       par = par.parent
+
     return par
 
   GetLeftChild: () ->
@@ -146,8 +157,8 @@ class Event
 
 class Voronoi
   constructor: (@sites) ->
-    @width = 999
-    @height = 999
+    @width = 500
+    @height = 500
 
     @places = []
     @edges = []
@@ -181,17 +192,23 @@ class Voronoi
     # 'true' denotes a place event. This is adding all the places to the event queue.
     @queue.push new Event place, true for place in @places
 
+
+    @queue.sort (a,b) -> a.y - b.y
+    #console.log @queue.map (e) -> e.y
+
     # work through the queue
     while @queue.length > 0
-      e = @queue.shift() # this may need to be queue.shift() to keep teh logics the same.
+      e = @queue.pop() # this may need to be queue.shift() to keep teh logics the same.
       @ly = e.point.y
       # stupid deleted list check thing
       
       if e.pe then @InsertParabola e.point else @RemoveParabola e
+      @queue.sort (a,b) -> a.y - b.y
+      #console.log @queue.map (e) -> e.y
 
     @FinishEdge @root
 
-    (edge.start = edge.neighbour.end if edge.neighbor?) for edge in @edges
+    (edge.start = edge.neighbour.end if edge.neighbour?) for edge in @edges
 
     return @edges
 
@@ -223,7 +240,7 @@ class Voronoi
 
     if par.cEvent
       # deleted.insert par.cEvent
-      queue.splice queue.indexOf(par.cEvent), 1
+      @queue.splice @queue.indexOf(par.cEvent), 1
       par.cEvent = 0
   
     start = new Point p.x, @GetY par.site, p.x
@@ -233,7 +250,7 @@ class Voronoi
     el = new Edge start, par.site, p
     er = new Edge start, p, par.site
 
-    el.neighbor = er  # Why is this one sided?
+    el.neighbour = er  # Why is this one sided?
 
     @edges.push el
 
@@ -266,12 +283,12 @@ class Voronoi
 
     if p0.cEvent?
       #deleted.insert p0.cEvent
-      queue.splice queue.indexOf(p0.cEvent), 1
+      @queue.splice @queue.indexOf(p0.cEvent), 1
       p0.cEvent = null
 
     if p2.cEvent?
       #deleted.insert p2.cEvent
-      queue.splice queue.indexOf(p2.cEvent), 1
+      @queue.splice @queue.indexOf(p2.cEvent), 1
       p2.cEvent = null
 
     p = new Point e.point.x, @GetY p1.site, e.point.x
@@ -383,11 +400,12 @@ class Voronoi
   CheckCircle: (b) ->
     lp = b.GetLeftParent()
     rp = b.GetRightParent()
-    a = lp.GetLeftChild()
-    c = rp.GetRightChild()
+    
+    a = lp.GetLeftChild() if lp?
+    c = rp.GetRightChild() if rp?
 
-    return if (!a || !c || a.site == c.site)  #switch to below
-    #return unless a && c && a.site != c.site 
+    #return if (!a || !c || a.site == c.site)  #switch to below
+    return unless a? && c? && a.site != c.site 
 
     s = @GetEdgeIntersection lp.edge, rp.edge
     return unless s?
@@ -403,9 +421,10 @@ class Voronoi
     @points.push e.point
     b.cEvent = e
     e.arch = b
+    
     @queue.push e
 
-  GetEdgeIntersection: (a, b) ->
+  GetEdgeIntersection: (a, b) ->      
     x = (b.g - a.g) / (a.f - b.f)
     y = a.f * x + a.g
     # This shit is silly, remove the costly / and just check sign.
@@ -413,6 +432,9 @@ class Voronoi
     return null if (y - a.start.y) / (a.direction.y) < 0
     return null if (x - b.start.x) / (b.direction.x) < 0
     return null if (y - b.start.y) / (b.direction.y) < 0
+
+
+
     p = new Point x, y
     @points.push p
     return p
