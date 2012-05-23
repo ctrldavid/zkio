@@ -12,7 +12,7 @@
       this.dx = 0;
       this.dy = 0;
       this.down = true;
-      this.heat = Math.random() * 20 + 40;
+      this.heat = 50;
     }
 
     return Point;
@@ -92,7 +92,7 @@
             point1.heat = x * old1 + (1 - x) * old2;
             point2.heat = x * old2 + (1 - x) * old1;
             point1.dx += (point2.dx - point1.dx) * 0.001;
-            point1.dy += (point2.dy - point1.dx) * 0.001;
+            point1.dy += (point2.dy - point1.dy) * 0.001;
             if (d > 20) {
               point1.dx += (point2.x - point1.x) * 0.0001 / (d - 19);
               point1.dy += (point2.y - point1.y) * 0.0001 / (d - 19);
@@ -116,8 +116,8 @@
         if (point.y < 50 && point.heat > 0) {
           point.heat -= 0.003;
         }
-        if (point.y > this.height - 50 && point.heat < 100) {
-          _results.push(point.heat += 0.7);
+        if (point.y > this.height - 100 && point.heat < 100) {
+          _results.push(point.heat += 0.4);
         } else {
           _results.push(void 0);
         }
@@ -172,7 +172,7 @@
   });
 
   window.setInterval(function() {
-    var b, c, cell, edge, halfedge, p, r, result, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _results;
+    var b, c, cell, edge, halfedge, p, r, result, s, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _results;
     result = voronoi.compute(points, bbox);
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "rgba(0,64,0,0.5)";
@@ -202,11 +202,16 @@
       ctx.lineTo(edge.vb.x, edge.vb.y);
       ctx.stroke();
     }
-    ctx.fillStyle = "rgba(0,0,0,1.0)";
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    _ref3 = x.points;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      s = _ref3[_l];
+      ctx.fillRect(s.x - 1, s.y - 1, 3, 3);
+    }
     x.settle();
     _results = [];
-    for (_l = 0, _len3 = points.length; _l < _len3; _l++) {
-      p = points[_l];
+    for (_m = 0, _len4 = points.length; _m < _len4; _m++) {
+      p = points[_m];
       if (p.x < 0) {
         p.x = 0;
         p.dx = -p.dx;

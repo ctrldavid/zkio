@@ -1,0 +1,42 @@
+Castle:
+  Supplies power to sector
+  When power is full, spawns mini swarmers
+  swarmers cannot be directly controlled, but will swarm with the rest of your army.
+
+
+Buildable:
+  Extractor (green)
+    Generates green resource
+  Factory
+    Consumes green, creates controllable swarm
+  Generator
+    Supplies small amounts of power to the sector, and small battery capacity
+    Generates mini swarmers when cap is full.
+
+
+Upgrading:
+  Done per zone. (From castle?)
+  Drains battery (stops creating miniswarmers)
+  faster with more generators
+
+
+
+
+Swarmers:
+  Mini:
+    HP: 10 + 2
+    Attack: 1 + 1
+    Def: 0 + 1
+  Large:
+    HP: 100 + 10
+    Attack: 10 + 1
+    Def: 0 + 1
+
+  Shield:
+    HP: 300 + 30
+    Attack: 0 + 0
+    Def: 0 + 1
+    Special:
+      Creates a large bubble that gives +2 Def/armour to all units inside it.
+
+  

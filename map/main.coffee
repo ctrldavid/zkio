@@ -3,7 +3,7 @@ class Point
     @dx = 0#Math.random()-0.5
     @dy = 0#Math.random()-0.5
     @down = true#Math.random() < 0.5
-    @heat = Math.random()*20+40#(@x/width)*20 +40 #Math.random() * 40
+    @heat = 50#100- ((@x/width)*20 +40) #Math.random() * 40
 
 
 class PointSpread
@@ -46,7 +46,7 @@ class PointSpread
           point1.heat = x*old1 + (1-x) * old2
           point2.heat = x*old2 + (1-x) * old1
           point1.dx += (point2.dx-point1.dx) * 0.001
-          point1.dy += (point2.dy-point1.dx) * 0.001
+          point1.dy += (point2.dy-point1.dy) * 0.001
           if d > 20
             # pull
             point1.dx += (point2.x-point1.x) * 0.0001/(d-19)
@@ -67,8 +67,8 @@ class PointSpread
       point.heat -= 0.05
       if point.y < 50 && point.heat > 0
         point.heat-=0.003
-      if point.y > @height-50 && point.heat < 100
-        point.heat+=0.7
+      if point.y > @height-100 && point.heat < 100
+        point.heat+=0.4
 
       # point.dy += 0.006 if point.down
       # point.dy -= 0.006 if !point.down
@@ -143,8 +143,8 @@ window.setInterval ->
     #console.log "#{edge.start.x}, #{edge.start.y} - #{edge.end.x}, #{edge.end.y}"
 
 
-  ctx.fillStyle = "rgba(0,0,0,1.0)"
-  #ctx.fillRect s.x-1, s.y-1, 3, 3 for s in x.points
+  ctx.fillStyle = "rgba(255,255,255,0.7)"
+  ctx.fillRect s.x-1, s.y-1, 3, 3 for s in x.points
   x.settle()
   for p in points
     if p.x < 0

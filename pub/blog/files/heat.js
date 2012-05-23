@@ -92,7 +92,7 @@
             point1.heat = x * old1 + (1 - x) * old2;
             point2.heat = x * old2 + (1 - x) * old1;
             point1.dx += (point2.dx - point1.dx) * 0.001;
-            point1.dy += (point2.dy - point1.dx) * 0.001;
+            point1.dy += (point2.dy - point1.dy) * 0.001;
             if (d > 20) {
               point1.dx += (point2.x - point1.x) * 0.0001 / (d - 19);
               point1.dy += (point2.y - point1.y) * 0.0001 / (d - 19);
