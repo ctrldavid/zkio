@@ -8,7 +8,7 @@
     <style type="text/css">
     <![CDATA[
       html{
-        background-color:rgba(92,92,92,1.0);
+        background-color:rgba(127,127,127,1.0);
         font-family:sans-serif;
       }
 
@@ -32,7 +32,7 @@
       }
 
       section#main{        
-        width: 640px;
+        width: 700px;
         padding: 14px;
 
         border: solid black 1px;
@@ -56,9 +56,17 @@
         box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
       }
 
+      canvas{
+        display:block;
+        margin:8px;
+      }
 
-      #canvas{
-        width:100%;
+      #heat{
+        background-color:black;
+      }
+
+      #swarms{
+        width:600px;
         height:400px;
         background-color:#000;
       }
@@ -83,6 +91,14 @@
     <section id="main">
       <header>A plain old boring static list of stuff I felt like sharing</header>
       <ul>
+        <li><article>
+          <header>Liquidy heat simulation thing with voronoi sites</header>
+          <section>
+            I got sidetracked working on something else and ended up with this. The cells rise if they're hot, drop if they're cold.
+            There is some simple (read: bad) swarming behaviour in there which acts to set up currents and such.
+            <canvas id="heat"></canvas>
+          </section>
+        </article></li>
         <li><article>
           <header>XML Serialised HTML5 template</header>
           <section class="description">
@@ -126,11 +142,14 @@
           <header>3d swarming sperm things</header>
           <section class="description">
             I made this a while back to learn 3d projection. Click on it for a link to an editable jsfiddle.
-            <canvas id="canvas"></canvas>
+            <canvas id="swarms"></canvas>
           </section>
         </article></li>        
       </ul>
     </section>
   <script type="text/javascript" src="files/swarm.js" async="async"></script>
+  <script type="text/javascript" src="files/rhill/rhill-voronoi-core.js"></script>
+  <script type="text/javascript" src="files/heat.js"></script>
+
   </body>
 </html>

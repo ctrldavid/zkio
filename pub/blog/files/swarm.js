@@ -311,7 +311,7 @@ var _3d = (function() {
 
 
 var Canvas = (function() {
-    var ctx = document.getElementById('canvas').getContext('2d');
+    var ctx = document.getElementById('swarms').getContext('2d');
 
     var updateCanvasDimensions = function() {
         ctx.canvas.width = ctx.canvas.clientWidth;
