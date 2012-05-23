@@ -129,9 +129,9 @@
 
   })();
 
-  width = 300;
+  width = 500;
 
-  height = 400;
+  height = 300;
 
   canvas = document.getElementById('heat');
 
