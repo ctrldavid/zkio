@@ -9,6 +9,7 @@
     <![CDATA[
       html{
         background-color:rgba(127,127,127,1.0);
+        background-image:url('files/dirt.png');
         font-family:sans-serif;
       }
 
@@ -34,9 +35,10 @@
       section#main{        
         width: 700px;
         padding: 14px;
+        margin: 20px auto;
 
         border: solid black 1px;
-        background-color:rgba(0,0,0,0.2);
+        background-color:rgba(0,0,0,0.1);
         box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
       }
 
@@ -141,13 +143,13 @@
         <li><article>
           <header>3d swarming sperm things</header>
           <section class="description">
-            I made this a while back to learn 3d projection. Click on it for a link to an editable jsfiddle.
+            I made this a while back to learn 3d projection. Click <a href="http://jsfiddle.net/ctrlfrk/hNaYu/103/">here</a> for a link to an editable jsfiddle.
             <canvas id="swarms"></canvas>
           </section>
         </article></li>        
       </ul>
     </section>
-  <script type="text/javascript" src="files/swarm.js" async="async"></script>
+  <script type="text/javascript" src="files/swarm.js"></script>
   <script type="text/javascript" src="files/rhill/rhill-voronoi-core.js"></script>
   <script type="text/javascript" src="files/heat.js"></script>
 
