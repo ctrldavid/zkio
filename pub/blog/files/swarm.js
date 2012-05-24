@@ -988,9 +988,9 @@ var Tests = (function() {
                     
                     if (dist<300 && ctr<2){
                         ctr++;
-                        list[i].v.x -= 1*vec.x/(dist+100);
-                        list[i].v.y -= 1*vec.y/(dist+100);
-                        list[i].v.z -= 1*vec.z/(dist+100);
+                        list[i].v.x -= 0.5*vec.x/(dist+100);
+                        list[i].v.y -= 0.5*vec.y/(dist+100);
+                        list[i].v.z -= 0.5*vec.z/(dist+100);
                     }
                     if(dist<400 && ctr>4){
                         list[i].a.x += 100*vec.x;
@@ -1064,7 +1064,7 @@ var Tests = (function() {
                 if (list[i].p.y<-1000){
                     list[i].v.y += bncfrc;
                 }
-                if (list[i].p.x<-1000){
+                if (list[i].p.x<-2000){
                     list[i].v.x += bncfrc;
                 }
                 if (list[i].p.z>1000){
@@ -1073,7 +1073,7 @@ var Tests = (function() {
                 if (list[i].p.y>1000){
                     list[i].v.y -= bncfrc;
                 }
-                if (list[i].p.x>1000 ){
+                if (list[i].p.x>2000 ){
                     list[i].v.x -= bncfrc;
                 }              
                 
@@ -1372,14 +1372,14 @@ Tests.game.newSpawner(0,0,4,4000,35,200);
 
 var ang = 0;
 var up = false;
-var h = 800;
+var h = 700;
 
-var rad = 2500;
+var rad = 3500;
 
 var runLoop = function(){
     shimRequestAnimFrame(runLoop);
             Canvas.clear();
-    _3d.set([rad*Math.cos(ang), rad*Math.sin(ang), h+500], [Math.PI / 2 + Math.PI/4 * ((h-400) / 600), 0, 3*Math.PI/2-ang], [0, 0, 500]);
+    _3d.set([rad*Math.cos(ang), rad*Math.sin(ang), h+500], [Math.PI / 2 + Math.PI/4 * ((h-450) / 600), 0, 3*Math.PI/2-ang], [0, 0, 500]);
     Tests.draw();  //leak
     Tests.dots.update();
     Tests.dots.calculate();    //leak with tick
@@ -1396,7 +1396,7 @@ var runLoop = function(){
     if (h > 800) {
         up = false;
     }
-    ang += 0.002;
+    ang += 0.003;
     /*Profiler.start("Output");
     O.C();
     O.O(Profiler.output());
