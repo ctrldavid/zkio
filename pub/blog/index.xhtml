@@ -4,85 +4,10 @@
   <head>
     <title>zk.io blog index</title>
     <meta charset="utf-8" />
+    <link href="main.css" rel="stylesheet" />
 
     <style type="text/css">
     <![CDATA[
-      html{
-        background-color:rgba(96,96,127,1.0);
-        background-image:url('files/dirt.png');
-        font-family:sans-serif;
-      }
-
-      a{
-        color:inherit;
-      }
-      a:hover{
-        text-decoration:none;
-      }
-
-      header{
-        font-size:20px;
-        color: rgba(0,0,0,1.0);
-        text-shadow: 1px 1px 3px rgba(127,127,127,1.0);
-        margin: 0px 0px 8px 0px; /*little bit of space under headings*/
-      }
-      section{       
-        color: rgba(16,16,16,1.0);
-        
-        font-size:16px;
-      }
-
-      section#main{        
-        width: 700px;
-        padding: 14px;
-        margin: 20px auto;
-
-        border: solid black 1px;
-        background-color:rgba(255,255,255,0.1);
-        box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
-      }
-
-      ul{
-        padding:0px;
-      }
-
-      li{
-        list-style-type:none;
-        margin: 32px 0px;
-      }
-
-      article{
-        padding: 8px;
-        border: solid black 1px;
-        background-color:rgba(255,255,255,0.1);
-        box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
-      }
-
-      canvas{
-        display:block;
-        margin:8px auto;
-      }
-
-      #heat{
-        background-color:black;
-        width:500px;
-        height:300px;
-      }
-
-      #swarms{
-        width:600px;
-        height:400px;
-        background-color:#000;
-      }
-
-      pre textarea{
-        width:100%;
-        color:rgba(0,0,0,1.0);
-        background-color:rgba(255,255,255,0.1);
-        border:none;
-        padding:0px;
-      }
-
     ]]>
     </style>
 
@@ -94,6 +19,7 @@
       <ul>
         <li><article>
           <header>Liquidy heat simulation thing with voronoi sites</header>
+          <aside>22 May 2012</aside>
           <section>
             I got sidetracked working on something else and ended up with this. The cells rise if they're hot, drop if they're cold.
             There is some simple (read: bad) swarming behaviour in there which acts to set up currents and such.
@@ -102,6 +28,7 @@
         </article></li>
         <li><article>
           <header>XML Serialised HTML5 template</header>
+          <aside>15 May 2012</aside>
           <section class="description">
             This is the 'template' file that I'm using for this site.
             <a href="files/xhtml5_template.xhtml">Download it here</a>
@@ -141,6 +68,7 @@
         </article></li>
         <li><article>
           <header>3d swarming things</header>
+          <aside>15 May 2012</aside>
           <section class="description">
             I made this a while back to learn 3d projection. Click <a href="http://jsfiddle.net/ctrlfrk/hNaYu/103/">here</a> for a link to an editable jsfiddle.
             <canvas id="swarms"></canvas>
