@@ -1,0 +1,88 @@
+html{
+  background-color:rgba(96,96,127,1.0);
+  background-image:url('files/dirt.png');
+  font-family:sans-serif;
+}
+
+a{
+  color:inherit;
+}
+a:hover{
+  text-decoration:none;
+}
+
+header{
+  font-size:20px;
+  color: rgba(0,0,0,1.0);
+  text-shadow: 1px 1px 3px rgba(127,127,127,1.0);
+  margin: 0px 0px 8px 0px; /*little bit of space under headings*/
+}
+section{       
+  font-size:16px;
+}
+
+section#main{        
+  width: 700px;
+  padding: 14px;
+  margin: 20px auto;
+}
+
+ul{
+  padding:0px;
+}
+
+li{
+  list-style-type:none;
+  margin: 32px 0px;
+}
+
+
+
+canvas{
+  display:block;
+  margin:0px auto;
+}
+
+#heat{
+  background-color:black;
+  width:500px;
+  height:300px;
+}
+
+#swarms{
+  width:600px;
+  height:400px;
+  background-color:#000;
+}
+pre{
+  margin:0px;
+}
+pre textarea{
+  width:100%;
+  color:rgba(0,0,0,1.0);
+  background-color:rgba(255,255,255,0.1);
+  border:none;
+  padding:0px;
+}
+
+
+article{
+  position:relative;
+  margin:0px 0px 0px 80px;
+  padding:8px 8px;
+  background-color:rgba(255,255,255,0.2);
+  box-shadow: 1px 1px 7px rgba(0,0,0,1.0);
+}
+header{
+    
+}
+aside{
+  position:absolute;
+  top:0px;
+  right:100%;
+  padding:0px 8px 0px 4px;
+  background-color:rgba(255,255,255,0.1);
+  width: 60px;
+  text-align:right;
+}
+
