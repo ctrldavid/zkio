@@ -172,7 +172,7 @@
   });
 
   window.setInterval(function() {
-    var b, c, cell, edge, halfedge, p, r, result, s, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _results;
+    var b, c, cell, edge, halfedge, p, r, result, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _results;
     result = voronoi.compute(points, bbox);
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "rgba(0,64,0,0.5)";
@@ -203,15 +203,10 @@
       ctx.stroke();
     }
     ctx.fillStyle = "rgba(255,255,255,0.7)";
-    _ref3 = x.points;
-    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-      s = _ref3[_l];
-      ctx.fillRect(s.x - 1, s.y - 1, 3, 3);
-    }
     x.settle();
     _results = [];
-    for (_m = 0, _len4 = points.length; _m < _len4; _m++) {
-      p = points[_m];
+    for (_l = 0, _len3 = points.length; _l < _len3; _l++) {
+      p = points[_l];
       if (p.x < 0) {
         p.x = 0;
         p.dx = -p.dx;
