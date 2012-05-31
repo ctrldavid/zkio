@@ -144,7 +144,7 @@ window.setInterval ->
 
 
   ctx.fillStyle = "rgba(255,255,255,0.7)"
-  ctx.fillRect s.x-1, s.y-1, 3, 3 for s in x.points
+  #ctx.fillRect s.x-1, s.y-1, 3, 3 for s in x.points
   x.settle()
   for p in points
     if p.x < 0
