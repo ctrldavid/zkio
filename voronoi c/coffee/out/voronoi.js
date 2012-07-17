@@ -114,8 +114,8 @@ Event = (function() {
 Voronoi = (function() {
   function Voronoi(sites) {
     this.sites = sites;
-    this.width = 500;
-    this.height = 500;
+    this.width = 0;
+    this.height = 0;
     this.places = [];
     this.edges = [];
     this.root = null;
@@ -137,20 +137,20 @@ Voronoi = (function() {
       place = _ref[_i];
       this.queue.push(new Event(place, true));
     }
-    this.queue.sort(function(a, b) {
-      return a.y - b.y;
-    });
     while (this.queue.length > 0) {
-      e = this.queue.pop();
+      this.queue.sort(function(a, b) {
+        return b.y - a.y;
+      });
+      console.log(this.queue.map(function(e) {
+        return "" + (e.y.toFixed(2)) + ", " + (e.point.x.toFixed(2));
+      }));
+      e = this.queue.shift();
       this.ly = e.point.y;
       if (e.pe) {
         this.InsertParabola(e.point);
       } else {
         this.RemoveParabola(e);
       }
-      this.queue.sort(function(a, b) {
-        return a.y - b.y;
-      });
     }
     this.FinishEdge(this.root);
     _ref2 = this.edges;
@@ -356,7 +356,14 @@ Voronoi = (function() {
   Voronoi.prototype.GetEdgeIntersection = function(a, b) {
     var p, x, y;
     x = (b.g - a.g) / (a.f - b.f);
+    if (isNaN(x)) {
+      x = Infinity;
+    }
     y = a.f * x + a.g;
+    if (isNaN(y)) {
+      y = Infinity;
+    }
+    console.log(x, y, a.f, a.g);
     if ((x - a.start.x) / a.direction.x < 0) {
       return null;
     }

@@ -1,4 +1,4 @@
-var canvas, ctx, edge, edges, i, r, s, sites, v, _i, _j, _len, _len2;
+var canvas, ctx, edge, edges, r, s, sites, v, _i, _j, _len, _len2;
 r = function(max, min) {
   if (min == null) {
     min = 0;
@@ -6,9 +6,9 @@ r = function(max, min) {
   return Math.random() * (max - min) + min;
 };
 sites = [];
-for (i = 1; i <= 50; i++) {
-  sites.push(new Point(r(500), r(500)));
-}
+sites.push(new Point(100, 100));
+sites.push(new Point(200, 100));
+sites.push(new Point(200, 200));
 canvas = document.createElement('canvas');
 canvas.width = 500;
 canvas.height = 500;
