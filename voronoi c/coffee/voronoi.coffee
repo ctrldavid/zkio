@@ -157,8 +157,8 @@ class Event
 
 class Voronoi
   constructor: (@sites) ->
-    @width = 500
-    @height = 500
+    @width = 0
+    @height = 0
 
     @places = []
     @edges = []
@@ -193,18 +193,16 @@ class Voronoi
     @queue.push new Event place, true for place in @places
 
 
-    @queue.sort (a,b) -> a.y - b.y
-    #console.log @queue.map (e) -> e.y
-
     # work through the queue
     while @queue.length > 0
-      e = @queue.pop() # this may need to be queue.shift() to keep teh logics the same.
+      @queue.sort (a,b) -> b.y - a.y
+      console.log @queue.map (e) -> "#{e.y.toFixed(2)}, #{e.point.x.toFixed(2)}"
+
+      e = @queue.shift() # this may need to be queue.shift() to keep teh logics the same.
       @ly = e.point.y
       # stupid deleted list check thing
       
       if e.pe then @InsertParabola e.point else @RemoveParabola e
-      @queue.sort (a,b) -> a.y - b.y
-      #console.log @queue.map (e) -> e.y
 
     @FinishEdge @root
 
@@ -426,7 +424,13 @@ class Voronoi
 
   GetEdgeIntersection: (a, b) ->      
     x = (b.g - a.g) / (a.f - b.f)
+    x = Infinity if isNaN x
     y = a.f * x + a.g
+    y = Infinity if isNaN y
+    
+    
+
+    console.log x,y, a.f, a.g
     # This shit is silly, remove the costly / and just check sign.
     return null if (x - a.start.x) / (a.direction.x) < 0
     return null if (y - a.start.y) / (a.direction.y) < 0

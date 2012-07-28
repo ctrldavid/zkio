@@ -3,7 +3,11 @@
 r = (max,min = 0) -> Math.random() * (max-min) + min
 
 sites = []
-sites.push new Point r(500), r(500) for i in [1..50]
+#sites.push new Point r(500), r(500) for i in [1..50]
+sites.push new Point 100, 100
+sites.push new Point 200, 100
+sites.push new Point 200, 200
+#sites.push new Point 100, 200
 
 
 
