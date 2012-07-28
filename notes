@@ -1,0 +1,4 @@
+cd /etc/nginx/sites-enabled/ 
+ln -s /etc/nginx/sites-available/yourdomain yourdomain
+
+/etc/init.d/nginx restart
