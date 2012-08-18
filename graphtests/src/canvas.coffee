@@ -45,7 +45,7 @@ class Canvas
 
   basePlate: (x,y, type) ->
     @ctx.fillStyle = Colour.BasePlate.rgba()
-    if type == 'Obstacle' then w = 45 else w = 15
+    if type == 'Obstacle' then w = 30 else w = 15
     @ctx.beginPath()
     @ctx.arc x,y,w,0,Math.PI*2, true
     @ctx.closePath()
@@ -54,7 +54,7 @@ class Canvas
   basePlateBorder: (x,y, type) ->
     @ctx.strokeStyle = Colour.BasePlateBorder.rgba()
     @ctx.lineWidth = 2
-    if type == 'Obstacle' then w = 45 else w = 15
+    if type == 'Obstacle' then w = 30 else w = 15
     @ctx.beginPath()
     @ctx.arc x,y,w,0,Math.PI*2, true
     @ctx.closePath()

@@ -67,7 +67,7 @@
       var w;
       this.ctx.fillStyle = Colour.BasePlate.rgba();
       if (type === 'Obstacle') {
-        w = 45;
+        w = 30;
       } else {
         w = 15;
       }
@@ -82,7 +82,7 @@
       this.ctx.strokeStyle = Colour.BasePlateBorder.rgba();
       this.ctx.lineWidth = 2;
       if (type === 'Obstacle') {
-        w = 45;
+        w = 30;
       } else {
         w = 15;
       }

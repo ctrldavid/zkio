@@ -11,7 +11,7 @@ class Visualisation
     @lastUpdate = Date.now()
 
   placeObstacles: ()->
-    @map.genObs() for x in [0..200]
+    @map.genObs() for x in [0..400]
 
   draw: () ->
     
@@ -28,7 +28,7 @@ class Visualisation
         if edge.start.type == edge.end.type then 2 else 1,
 
     for node in @map.graph.nodes
-      @canvas.circle node.x, node.y, Colour[node.type], {Town:4, Route:2, Instance:3, Obstacle:0}[node.type]
+      @canvas.circle node.x, node.y, Colour[node.type], {Town:3, Route:1.5, Instance:2, Obstacle:0}[node.type]
 
   voronoi: () ->
     voronoi = new Voronoi()
@@ -42,7 +42,7 @@ class Visualisation
     ctx = @canvas.ctx
     for cell in result.cells
       c = Colour[cell.site.t]
-      c.a = 0.1 + 0.9 * cell.site.v.toFixed(2)
+      c.a = 0.1 + 0.1 * cell.site.v.toFixed(2)
       ctx.fillStyle = c.rgba()
       c.a = 1.0
       
@@ -61,7 +61,8 @@ class Visualisation
       ctx.beginPath()
       ctx.moveTo edge.va.x, edge.va.y
       ctx.lineTo edge.vb.x, edge.vb.y
-      ctx.stroke()
+      if (edge.lSite.t != edge.rSite.t)
+        ctx.stroke()
 
   gen: () ->
     # @draw() if @map.gen1()

@@ -11,7 +11,7 @@ class Colour
   @Town: new Colour [0, 127, 255, 1.0]
   @Route: new Colour [127, 63, 0, 1.0]
   @Instance: new Colour [0, 255, 127, 1.0]
-  @Obstacle: new Colour [220, 64, 12, 1.0]
+  @Obstacle: new Colour [0, 192, 0, 1.0]
 
   @Path: new Colour [63, 127, 63, 1.0]
   @RouteLink: new Colour [63, 31, 0, 1.0]

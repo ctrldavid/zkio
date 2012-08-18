@@ -33,11 +33,11 @@ class Map
   clearance: (node, threshold) ->
     for node2 in @graph.nodes
       if @distance(node, node2) < threshold then return false
-      if node2.type == 'Obstacle' && @distance(node, node2) < threshold*3 then return false
+      if node2.type == 'Obstacle' && @distance(node, node2) < threshold*2 then return false
     return true
 
   edgeCheck: (node) ->
-    max = {Town:4, Route:4, Instance:2, Obstacle:0}[node.type]
+    max = {Town:4, Route:3, Instance:1, Obstacle:0}[node.type]
     return node.edges.length < max
 
   cull: () ->
@@ -74,7 +74,7 @@ class Map
     return false unless -(window.innerHeight/2-30) < y < (window.innerHeight/2-30)
 
     d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-    return false unless d > 100
+    return false unless d > 60
 
     node = new Obstacle x, y
 
@@ -154,19 +154,19 @@ class Map
 
     # create a node that is a different type
     if src.type == 'Town'
-      if Math.random() < 0.1 
+      if Math.random() < -0.3
         node = new Instance x,y
       else if Math.random() < 0.1 
         node = new Town x,y
       else
         node = new Route x,y
     else if src.type == 'Instance'
-      if Math.random() < 0.6
+      if Math.random() < 0.1
         node = new Instance x,y
       else
         node = new Route x,y
     else
-      if Math.random() < 10.7
+      if Math.random() < 0.65
         node = new Route x,y
       else
         node = new Town x,y

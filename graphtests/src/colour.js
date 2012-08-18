@@ -18,7 +18,7 @@
 
     Colour.Instance = new Colour([0, 255, 127, 1.0]);
 
-    Colour.Obstacle = new Colour([220, 64, 12, 1.0]);
+    Colour.Obstacle = new Colour([0, 192, 0, 1.0]);
 
     Colour.Path = new Colour([63, 127, 63, 1.0]);
 

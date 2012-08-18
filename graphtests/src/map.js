@@ -89,7 +89,7 @@
         if (this.distance(node, node2) < threshold) {
           return false;
         }
-        if (node2.type === 'Obstacle' && this.distance(node, node2) < threshold * 3) {
+        if (node2.type === 'Obstacle' && this.distance(node, node2) < threshold * 2) {
           return false;
         }
       }
@@ -100,8 +100,8 @@
       var max;
       max = {
         Town: 4,
-        Route: 4,
-        Instance: 2,
+        Route: 3,
+        Instance: 1,
         Obstacle: 0
       }[node.type];
       return node.edges.length < max;
@@ -148,7 +148,7 @@
         return false;
       }
       d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-      if (!(d > 100)) {
+      if (!(d > 60)) {
         return false;
       }
       node = new Obstacle(x, y);
@@ -224,7 +224,7 @@
       }
       src.tries = src.tries - 1;
       if (src.type === 'Town') {
-        if (Math.random() < 0.1) {
+        if (Math.random() < -0.3) {
           node = new Instance(x, y);
         } else if (Math.random() < 0.1) {
           node = new Town(x, y);
@@ -232,13 +232,13 @@
           node = new Route(x, y);
         }
       } else if (src.type === 'Instance') {
-        if (Math.random() < 0.6) {
+        if (Math.random() < 0.1) {
           node = new Instance(x, y);
         } else {
           node = new Route(x, y);
         }
       } else {
-        if (Math.random() < 10.7) {
+        if (Math.random() < 0.65) {
           node = new Route(x, y);
         } else {
           node = new Town(x, y);

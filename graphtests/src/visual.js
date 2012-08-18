@@ -16,7 +16,7 @@
     Visualisation.prototype.placeObstacles = function() {
       var x, _i, _results;
       _results = [];
-      for (x = _i = 0; _i <= 200; x = ++_i) {
+      for (x = _i = 0; _i <= 400; x = ++_i) {
         _results.push(this.map.genObs());
       }
       return _results;
@@ -44,9 +44,9 @@
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         node = _ref3[_l];
         _results.push(this.canvas.circle(node.x, node.y, Colour[node.type], {
-          Town: 4,
-          Route: 2,
-          Instance: 3,
+          Town: 3,
+          Route: 1.5,
+          Instance: 2,
           Obstacle: 0
         }[node.type]));
       }
@@ -82,7 +82,7 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         cell = _ref[_i];
         c = Colour[cell.site.t];
-        c.a = 0.1 + 0.9 * cell.site.v.toFixed(2);
+        c.a = 0.1 + 0.1 * cell.site.v.toFixed(2);
         ctx.fillStyle = c.rgba();
         c.a = 1.0;
         ctx.beginPath();
@@ -103,7 +103,11 @@
         ctx.beginPath();
         ctx.moveTo(edge.va.x, edge.va.y);
         ctx.lineTo(edge.vb.x, edge.vb.y);
-        _results.push(ctx.stroke());
+        if (edge.lSite.t !== edge.rSite.t) {
+          _results.push(ctx.stroke());
+        } else {
+          _results.push(void 0);
+        }
       }
       return _results;
     };
